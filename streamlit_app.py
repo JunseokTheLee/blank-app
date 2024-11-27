@@ -71,7 +71,7 @@ def get_recommendations(book_title, books_df, tfidf_matrix, tfidf_vectorizer, to
 
 # Streamlit App
 def main():
-    st.header("PageAI: The NLCSJ Book Recommendation Engine")
+    st.header("♠ PageAI: The NLCSJ Book Recommendation Engine")
     st.markdown("Takes a book that user has read as input and gives recommendations. For now, we recommend that you skip the first 5 books due to the large frequency of duplicates. We are still refining our dataset")
 
     # Load and preprocess data
