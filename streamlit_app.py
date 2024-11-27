@@ -47,7 +47,7 @@ def preprocess_data(books_df):
     return books_df_filtered, tfidf_matrix, tfidf
 
 # Recommendation function
-def get_recommendations(book_title, books_df, tfidf_matrix, tfidf_vectorizer, top_n=10):
+def get_recommendations(book_title, books_df, tfidf_matrix, tfidf_vectorizer, top_n=20):
     # Find the index of the book
     book_indices = books_df[books_df['Book-Title'].str.lower().str.contains(book_title.lower(), case=False)].index
     
@@ -72,7 +72,7 @@ def get_recommendations(book_title, books_df, tfidf_matrix, tfidf_vectorizer, to
 # Streamlit App
 def main():
     st.header("PageAI: The NLCSJ Book Recommendation Engine")
-    st.markdown("Takes a book that user has read as input and gives recommendations")
+    st.markdown("Takes a book that user has read as input and gives recommendations. For now, we recommend that you skip the first 5 books due to the large frequency of duplicates. We are still refining our dataset")
 
     # Load and preprocess data
     books_df, ratings_df, users_df = load_data()
