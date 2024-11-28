@@ -48,7 +48,7 @@ def preprocess_data(books_df):
 # Fit NearestNeighbors model (cache to avoid recomputation)
 @st.cache_resource
 def fit_nearest_neighbors_model(_tfidf_matrix):
-    nn_model = NearestNeighbors(metric='manhattan', algorithm='brute')
+    nn_model = NearestNeighbors(metric='cosine', algorithm='brute')
     nn_model.fit(_tfidf_matrix)
     return nn_model
 
