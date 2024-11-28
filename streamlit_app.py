@@ -81,14 +81,14 @@ def main():
     books_df, tfidf_matrix, tfidf_vectorizer = preprocess_data(books_df)
     nn_model = fit_nearest_neighbors_model(tfidf_matrix)
 
-    # Book input field
-    st.sidebar.header("Find Your Next Read")
-    book_title = st.sidebar.text_input("Enter a book you've enjoyed (Press Enter to search)", "")
+    # Book input field in the center
+    st.header("Find Your Next Read")
+    book_title = st.text_input("Enter a book you've enjoyed (Press Enter to search)", "")
 
     # Search button
-    if st.sidebar.button('Get Recommendations'):
+    if st.button('Get Recommendations'):
         if book_title.strip() == "":
-            st.sidebar.warning("Please enter a book title.")
+            st.warning("Please enter a book title.")
         else:
             # Get recommendations
             recommendations = get_recommendations(book_title, books_df, tfidf_matrix, nn_model)
