@@ -81,32 +81,35 @@ def main():
     books_df, tfidf_matrix, tfidf_vectorizer = preprocess_data(books_df)
     nn_model = fit_nearest_neighbors_model(tfidf_matrix)
 
-    # Book input field in the center
-    st.header("Find Your Next Read")
-    book_title = st.text_input("Enter a book you've enjoyed (Press Enter to search)", "")
+    # Centering the search bar
+    st.markdown("<h1 style='text-align: center;'>Find Your Next Read</h1>", unsafe_allow_html=True)
+    with st.container():
+        col1, col2, col3 = st.columns([1, 2, 1])  # Create three columns with the middle one wider to center content
+        with col2:
+            book_title = st.text_input("Enter a book you've enjoyed (Press Enter to search)", "")
 
-    # Search button
-    if st.button('Get Recommendations'):
-        if book_title.strip() == "":
-            st.warning("Please enter a book title.")
-        else:
-            # Get recommendations
-            recommendations = get_recommendations(book_title, books_df, tfidf_matrix, nn_model)
-            
-            if recommendations is not None and not recommendations.empty:
-                st.subheader(f"Books Similar to {book_title}")
-                
-                # Display recommendations as a list
-                for _, book in recommendations.iterrows():
-                    st.write("----")
-                    if 'Image-URL-S' in book and pd.notna(book['Image-URL-S']):
-                        st.image(book['Image-URL-S'], width=100)
-                    st.write(f"**{book['Book-Title']}**")
-                    st.write(f"*by {book['Book-Author']}*")
-                    if 'Publisher' in book and pd.notna(book['Publisher']):
-                        st.write(f"Publisher: {book['Publisher']}")
-            else:
-                st.warning("No recommendations found. Please try another book.")
+            # Search button
+            if st.button('Get Recommendations'):
+                if book_title.strip() == "":
+                    st.warning("Please enter a book title.")
+                else:
+                    # Get recommendations
+                    recommendations = get_recommendations(book_title, books_df, tfidf_matrix, nn_model)
+
+                    if recommendations is not None and not recommendations.empty:
+                        st.subheader(f"Books Similar to {book_title}")
+
+                        # Display recommendations as a list
+                        for _, book in recommendations.iterrows():
+                            st.write("----")
+                            if 'Image-URL-S' in book and pd.notna(book['Image-URL-S']):
+                                st.image(book['Image-URL-S'], width=100)
+                            st.write(f"**{book['Book-Title']}**")
+                            st.write(f"*by {book['Book-Author']}*")
+                            if 'Publisher' in book and pd.notna(book['Publisher']):
+                                st.write(f"Publisher: {book['Publisher']}")
+                    else:
+                        st.warning("No recommendations found. Please try another book.")
 
 if __name__ == '__main__':
     main()
